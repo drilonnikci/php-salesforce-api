@@ -1,0 +1,18 @@
+{
+    "name": "drilonnikci/php-salesforce-api",
+    "description": "A library for interacting with the Salesforce API",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "DrilonCydeo\\PhpSalesforceApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "drilonnikci",
+            "email": "drilonnikci@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
