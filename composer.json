@@ -4,7 +4,7 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "DrilonCydeo\\PhpSalesforceApi\\": "src/"
+            "drilonnikci\\PhpSalesforceApi\\": "src/"
         }
     },
     "authors": [
@@ -14,5 +14,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "7.9.x-dev"
+    }
 }
