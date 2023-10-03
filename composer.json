@@ -15,6 +15,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "guzzlehttp/guzzle": "7.9.x-dev"
+        "guzzlehttp/guzzle": "7.9.x-dev",
+        "monolog/monolog": "3.x-dev"
     }
 }
