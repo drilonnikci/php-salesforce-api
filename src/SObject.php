@@ -28,20 +28,21 @@ class SObject
         try {
             $client = new Client();
             $uri = $this->sobjectUrl . "/{$object}";
-            $response = $client->post($uri, ['headers' => $this->headers, 'form_params' => $data]);
-            
+            $response = $client->post($uri, ['headers' => $this->headers, 'json' => $data]);
             $message = [
                 'status' => $response->getReasonPhrase(),
                 'code' => $response->getStatusCode(),
+                'body' => json_decode($response->getBody()),
             ];
-        } catch (GuzzleException $exception) {
-            $this->getLogger()->error("{$object} wasn't created. Error Message: " . $exception->getMessage());
 
+            $this->getLogger()->notice("{$object} was created", $message);
+        } catch (GuzzleException $exception) {
             $message = [
                 'status' => 'Failed',
                 'code' => $exception->getCode(),
                 'message' => $exception->getMessage(),
             ];
+            $this->getLogger()->error("{$object} wasn't created. ",  $message);
         }
 
         return json_encode($message);
