@@ -1,9 +1,11 @@
 <?php
 
-namespace drilonnikci\PhpSalesforceApi\Authentication;
+namespace drilonnikci\PhpSalesforceApi;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use drilonnikci\PhpSalesforceApi\traits\LoggerTrait;
+use Monolog\Logger;
 
 class SalesforceAuthRequest
 {
@@ -11,9 +13,9 @@ class SalesforceAuthRequest
     private string $instanceUrl;
     private string $accessToken;
     private array  $headers;
-
     private array $credentials;
 
+    use LoggerTrait;
     /**
      * @param array $credentials
      * @param bool $sandbox
@@ -66,12 +68,13 @@ class SalesforceAuthRequest
             $uri = "{$this->loginUrl}/services/oauth2/token";
             $response = $client->post($uri, ['form_params' => $this->credentials]);
             $data = json_decode($response->getBody());
-
             $this->accessToken = $data->access_token;
             $this->instanceUrl = $data->instance_url;
             $this->headers = ['Authorization' => "Bearer " . $this->accessToken, 'Content-Type' => 'application/json'];
-        } catch (GuzzleException $e) {
-            var_dump($e->getMessage());
+
+            $this->getLogger()->notice("Access Token was Generated");
+        } catch (GuzzleException $exception) {
+            $this->getLogger()->error("Access Token could not be generated. Error Message: " . $exception->getMessage());
         }
     }
 }
