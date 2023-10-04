@@ -1,0 +1,28 @@
+name: Update Packagist
+
+on:
+  push:
+    branches:
+      - main # Replace with your main branch name if different
+
+jobs:
+  update-packagist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+
+      - name: Install Composer
+        run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+      - name: Authenticate with GitHub Token
+        run: composer config --global github-oauth.github.com "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Update Packagist
+        run: composer update
